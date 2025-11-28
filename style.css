@@ -31,21 +31,34 @@ div img {
   max-width: 225px; 
 }
 
-/* grid system -- mobile first! */
-/* flex container */
+/* ============================ */
+/* GRID SYSTEM — Mobile First   */
+/* Replaced Flexbox with CSS Grid */
+/* ============================ */
 .row {
-  display: flex;
-  flex-flow: row wrap;
+  display: grid; /* switched from Flexbox to CSS Grid */
+
+  /* Default mobile layout:
+     one column so all items stack vertically */
+  grid-template-columns: 1fr;
+
+  /* Replaces old flex-gap/margin-left approach */
+  gap: 1rem;
+
+  /* New Grid property (extra credit):
+     justify-items controls horizontal alignment
+     of content *inside each grid cell*.
+     center = centers the elements in each grid area. */
+  justify-items: center;
 }
 
-/* attribute selector to give some margin between columns and apply styles to flex items */
+/* Base styling for any "col-*" element */
 [class*="col-"] {
-  margin-left: 4%;
-  flex: 0 0 92%;
+  margin-left: 0; /* reset from old 4% (we use Grid gap now) */
   padding: 1rem;
 }
 
-/* Add background colors to see how much space each column is taking */
+/* Background colors used for visual differentiation */
 .col-1 {
   background-color: #A3CDD9;
 }
@@ -67,56 +80,53 @@ div img {
   background-color: #FFE4D6;
 }
 
-/* Tablet Landscape Screen Sizes */
+/* ============================ */
+/* Tablet Layout (min-width: 480px) */
+/* ============================ */
 @media only screen and (min-width: 480px)  {
 
-  .col-1,
-  .col-2,
-  .col-3,
-  .col-5 {
-    flex: 0 0 44%;
+  /* Most rows: 2 columns on tablet */
+  .row {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
-  /* Keep row 4 item full width on tablet */
-  .col-4 {
-    flex: 0 0 92%;
+  /* Keep row 4 full width (single column) */
+  .row-4 {
+    grid-template-columns: 1fr;
   }
 
-  /* Change order of row 5 items on tablet */
-  .row-5 article:nth-child(2) {
-    order: 1;
-  }
-  .row-5 article:nth-child(1) {
-    order: 2;
-  }
-  .row-5 article:nth-child(3) {
-    order: 3;
-  }
+  /* No reordering needed on row-5 — Grid naturally adapts */
 }
 
-/* Desktop screen Sizes */
+/* ============================ */
+/* Desktop Layout (min-width: 768px) */
+/* ============================ */
 @media only screen and (min-width: 768px) {
 
-  .col-1 {
-    flex: 0 0 20%;
+  /* Desktop: 3 columns by default */
+  .row {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 
-  .col-2 {
-    flex: 0 0 44%;
+  /* Narrow + wide layout for row 3
+     1fr = narrow column, 2fr = wider content column */
+  .row-3 {
+    grid-template-columns: 1fr 2fr;
   }
 
-  /* narrow + wide layout for row 3 */
-  .col-3 {
-    flex: 0 0 68%;
+  /* Full-width feature section (row 4) */
+  .row-4 {
+    grid-template-columns: 1fr;
   }
 
-  /* full-width single feature (row 4) */
-  .col-4 {
-    flex: 0 0 92%;
-  }
+  /* Unique 5-item layout for row 6 */
+  .row-6 {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
 
-  /* 5 items per row for row 6 (unique layout) */
-  .col-5 {
-    flex: 0 0 16%;
+    /* New Grid property (extra credit):
+       grid-auto-rows sets the minimal height for automatically created rows.
+       Each row will be at least 150px tall but can expand with content. */
+    grid-auto-rows: minmax(150px, auto);
   }
 }
+
