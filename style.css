@@ -123,7 +123,7 @@ div img {
   .row-6 {
     grid-template-columns: repeat(5, minmax(0, 1fr));
 
-    /* New Grid property (extra credit):
+    /* New Grid property:
        grid-auto-rows sets the minimal height for automatically created rows.
        Each row will be at least 150px tall but can expand with content. */
     grid-auto-rows: minmax(150px, auto);
